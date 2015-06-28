@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd /home/steam
-#./arma3server start
+./tf2server start
 echo "started server"
 sleep 10
 echo "retreiving details"
