@@ -14,6 +14,9 @@ rundocker:
 	@docker run --name=`cat NAME` \
 	--cidfile="cid" \
 	-v /tmp:/tmp \
+	-p 27005:27005/udp \
+	-p 27015:27015/udp \
+	-p 27020:27020/udp \
 	--env STEAM_USERNAME=`cat steam_username` \
 	--env STEAM_PASSWORD=`cat steam_password` \
 	--env STEAM_GUARD_CODE=`cat steam_guard_code` \
