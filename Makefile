@@ -8,18 +8,18 @@ help:
 
 build: builddocker beep
 
-run: steam_username steam_password steam_guard_code builddocker rundocker beep
+run: steam_username steam_password steam_guard_code steam_dir builddocker rundocker beep
 
 rundocker:
 	@docker run --name=`cat NAME` \
 	--cidfile="cid" \
 	-v /tmp:/tmp \
+	-v `cat steam_dir`:/home/steam \
 	-p 27005:27005/udp \
 	-p 27015:27015/udp \
 	-p 27020:27020/udp \
 	--env STEAM_USERNAME=`cat steam_username` \
 	--env STEAM_PASSWORD=`cat steam_password` \
-	--env STEAM_GUARD_CODE=`cat steam_guard_code` \
 	-v /var/run/docker.sock:/run/docker.sock \
 	-v $(shell which docker):/bin/docker \
 	-t `cat TAG`
@@ -67,3 +67,7 @@ steam_password:
 		read -r -p "Enter the steam password you wish to associate with this container [STEAM_PASSWORD]: " STEAM_PASSWORD; echo "$$STEAM_PASSWORD">>steam_password; cat steam_password; \
 	done ;
 
+steam_dir:
+	@while [ -z "$$STEAM_DIR" ]; do \
+		read -r -p "Enter the steam dir you wish to associate with this container [STEAM_DIR]: " STEAM_DIR; echo "$$STEAM_DIR">>steam_dir; cat steam_dir; \
+	done ;
